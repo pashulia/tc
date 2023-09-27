@@ -21,12 +21,10 @@ function Countdown() {
     const [totalSeconds, setTotalSeconds] = useState(initialMinutes * 60);
     // состояние, которое указывает, запущен ли таймер в данный момент или приостановлен
     const [isRunning, setIsRunning] = useState(false);
-
+    // Воспроизведение аудио
     function playAudio() {
         const audioUrl = 'https://s3.amazonaws.com/freecodecamp/drums/Heater-1.mp3';
         const audio = new Audio(audioUrl);
-    
-        // Воспроизведение аудио
         audio.play()
             .then(() => {
             console.log('Аудио воспроизводится');
@@ -39,6 +37,8 @@ function Countdown() {
     // следим за изменениями isRunning и totalSeconds. Если таймер запущен (isRunning равен true) и 
     // totalSeconds больше 0, то каждую секунду уменьшаем значение totalSeconds. 
     // Когда totalSeconds достигает 0, таймер останавливается
+
+    // Хук useEffect даёт вам возможность выполнять побочные эффекты после каждого рендера
     useEffect(() => {
         if (isRunning) {
             const timer = setInterval(() => {
@@ -47,7 +47,7 @@ function Countdown() {
                 } else {
                     // очищаем интервал и
                     clearInterval(timer);
-                    // проигрывание звукового сигнала
+                    // проигрываем звуковой сигнал
                     playAudio();
                 }
             }, 1000);
